@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             yolov5TFLiteDetector!!.addGPUDelegate()
             yolov5TFLiteDetector!!.initialModel(this)
             Log.i("model", "Success loading model" + yolov5TFLiteDetector!!.initialModel(this))
+
         } catch (e: Exception) {
             Log.e("image", "load model error: " + e.message + e.toString())
         }
@@ -76,7 +77,6 @@ class MainActivity : AppCompatActivity() {
 
         // 全屏画面
         cameraPreviewMatch = findViewById(R.id.camera_preview_match)
-        cameraPreviewMatch!!.setScaleType(PreviewView.ScaleType.FILL_START)
 
         // 全图画面
         cameraPreviewWrap = findViewById(R.id.camera_preview_wrap)
@@ -110,12 +110,14 @@ class MainActivity : AppCompatActivity() {
         initModel("yolov5s")
 
         // 监听模型切换按钮
+
         modelSpinner!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 val model = adapterView.getItemAtPosition(i) as String
                 Toast.makeText(this@MainActivity, "loading model: $model", Toast.LENGTH_LONG).show()
                 initModel(model)
                 if (IS_FULL_SCREEN) {
+
                     cameraPreviewWrap!!.removeAllViews()
                     val fullScreenAnalyse = FullScreenAnalyse(
                         this@MainActivity,
